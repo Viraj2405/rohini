@@ -1,0 +1,470 @@
+{
+	"info": {
+		"_postman_id": "d845f687-3d5c-489d-92dc-9d5bd9c4e5a4",
+		"name": "Chaindesk API",
+		"description": "---\n\n# Chindesk API\n\n## Overview\n\nThe Chindesk API enables seamless integration of customer support and management features, providing developers with powerful tools to manage tickets, customer interactions, and support analytics. This Postman collection includes all core endpoints, helping teams streamline support processes and improve customer satisfaction.\n\n## Application Usage\n\nThe Chindesk API is ideal for applications that require:\n\n- **Customer Support Management**: Create, update, and manage customer support tickets.\n    \n- **Interaction Tracking**: Record and analyze customer interactions across multiple channels.\n    \n- **Support Analytics**: Generate insights into ticket resolution times, customer feedback, and agent performance.\n    \n\nThis API is highly useful for customer support platforms, CRM applications, and analytics-driven customer engagement tools.\n\n## API Usage\n\n### Key Features:\n\n1. **Ticket Management**: Endpoints to create, update, and resolve support tickets.\n    \n2. **Customer Interaction Tracking**: Log customer interactions for better case management.\n    \n3. **Analytics and Reporting**: Generate reports on support metrics and customer satisfaction.\n    \n\n### API Request/Response Structure:\n\nEach endpoint in the collection includes:\n\n- **Request URL**: Specific endpoint URL for each API function.\n    \n- **HTTP Method**: Type of HTTP method used (e.g., `GET`, `POST`, `PUT`, or `DELETE`).\n    \n- **Parameters**: Details on query parameters, headers, and body fields for each request.\n    \n- **Response**: Sample JSON response formats for successful and unsuccessful requests.\n    \n\n### Authentication\n\nThe Chindesk API requires **API Key-based authentication** to ensure secure access. Include the API key in the headers:\n\n- **Header**: `Authorization`\n    \n- **Value**: `Bearer`\n    \n\n> Replace with your unique Chindesk API key. It’s recommended to secure this key and avoid sharing it in publicly accessible code. \n  \n\n### Rate Limiting\n\nRate limits are applied based on your subscription plan. Exceeding the allowed requests will lead to throttling. Check your account settings or the Chindesk documentation for specific rate limits applicable to your plan.\n\n### Error Handling\n\nThe API uses standard HTTP status codes for error handling:\n\n- **400 Bad Request**: Invalid parameters or incorrect input.\n    \n- **401 Unauthorized**: API key is missing or incorrect.\n    \n- **404 Not Found**: Requested resource is not available.\n    \n- **500 Internal Server Error**: A server-side issue, typically resolved by retrying.\n    \n\nError responses include a `message` field to assist in troubleshooting.\n\n## Collection Structure\n\nThis Postman collection is organized by Chindesk's key functionalities:\n\n1. **Tickets**: Endpoints for creating, updating, and resolving support tickets.\n    \n2. **Interactions**: Endpoints to log and track customer interactions.\n    \n3. **Analytics**: Endpoints to retrieve reports on ticket resolution, customer feedback, and support metrics.\n    \n\nEach endpoint includes:\n\n- **Parameter Roles**: Parameters are categorized as `configData`, `requiredKey`, `nonRequiredKey`, `includeKey`, and `nonIncludeKey` to clarify their importance and purpose.\n    \n- **Sample Requests and Responses**: Example data to help you test each endpoint.\n    \n\n## Authentication Setup in Postman\n\nTo set up API key authentication in Postman:\n\n1. Go to the **Authorization** tab for each request, and select **Bearer Token**.\n    \n2. Enter your API key as `Bearer` .\n    \n\nAlternatively, configure a **Collection-level variable**:\n\n1. Open **Collection Settings**, navigate to **Variables**, and add a new variable, e.g., `{{API_KEY}}`.\n    \n2. Set this variable’s value to your API key.\n    \n3. Use `{{API_KEY}}` in the **Authorization** header of each request for easier updates across the collection.\n    \n\n## Usage Notes\n\n- **Separate Keys for Testing and Production**: Use different API keys for development and production to maintain security.\n    \n- **Regularly Rotate API Keys**: Enhance security by periodically updating your API key, and avoid sharing it in public code.\n    \n- **Optimize API Requests**: To reduce redundant calls, use batch processing where possible, especially when handling multiple tickets or interactions.\n    \n\n## Support and Troubleshooting\n\nFor additional support, contact Chindesk support or refer to the full API documentation here: [Chindesk API Documentation](https://chindesk.com/docs).\n\n---\n\nThis documentation provides a structured guide for developers using the Chindesk API Postman collection, detailing key features, authentication, and best practices for effective use and integration.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "40386055",
+		"_collection_link": "https://www.postman.com/apis22-0470/purpose-buddy-assignment-october/collection/oryipe5/chaindesk-api?action=share&source=collection_link&creator=40386055"
+	},
+	"item": [
+		{
+			"name": "Conversations",
+			"item": [
+				{
+					"name": "List Conversations",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/conversations",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"conversations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Conversation Messages",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/conversations/{{conversationId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"conversations",
+								"{{conversationId}}"
+							]
+						},
+						"description": "conversationId : {{conversationId}} // [\"requiredKey\"]"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Agents",
+			"item": [
+				{
+					"name": "Query Agent",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"query\": \"<string>\", // [\"requiredKey\"]\n  \"conversationId\": \"<string>\", // [\"requiredKey\"]\n  \"visitorId\": \"<string>\", // [\"requiredKey\"]\n  \"temperature\": 123, // [\"nonRequiredKey\" : 1]\n  \"streaming\": true, // [\"nonRequiredKey\" : false]\n  \"modelName\": \"gpt_3_5_turbo\", // [\"requiredKey\"]\n  \"maxTokens\": 123, // [\"nonRequiredKey\" : 1000]\n  \"presencePenalty\": 123, // [\"nonRequiredKey\" : 0]\n  \"frequencyPenalty\": 123, // [\"nonRequiredKey\" : 0]\n  \"topP\": 123, // [\"nonRequiredKey\" : 1]\n  \"filters\": {\n    \"custom_ids\": [\"<string>\"] // [\"includeKey\"]\n  },\n  \"systemPrompt\": \"<string>\", // [\"nonRequiredKey\" : null]\n  \"userPrompt\": \"<string>\", // [\"requiredKey\"]\n  \"promptType\": \"raw\", // [\"nonRequiredKey\" : \"raw\"]\n  \"promptTemplate\": \"<string>\" // [\"nonRequiredKey\" : \"default\"]\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/agents/{{agentId}}/query",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"agents",
+								"{{agentId}}",
+								"query"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Agent",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Test\", // [\"requiredKey\"]\n  \"description\": \"Test \", // [\"requiredKey\" : null]\n  \"modelName\": \"gpt_3_5_turbo\", // [\"requiredKey\"]\n  \"temperature\": 123, // [\"nonRequiredKey\" : 1]\n  \"systemPrompt\": \"<string>\", // [\"nonRequiredKey\" : null]\n  \"userPrompt\": \"This is Test\", // [\"requiredKey\"]\n  \"promptType\": \"raw\", // [\"nonRequiredKey\" : \"raw\"]\n  \"promptTemplate\": \"<string>\", // [\"nonRequiredKey\" : \"default\"]\n  \"visibility\": \"public\" // [\"nonRequiredKey\" : \"private\"]\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/agents",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"agents"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Agent",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/agents/{{agentId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"agents",
+								"{{agentId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Agent",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"<string>\", // [\"nonRequiredKey\" : null]\n  \"description\": \"<string>\", // [\"nonRequiredKey\" : null]\n  \"modelName\": \"gpt_3_5_turbo\", // [\"nonRequiredKey\" : \"gpt_3_5_turbo\"]\n  \"temperature\": 123, // [\"nonRequiredKey\" : 1]\n  \"systemPrompt\": \"<string>\", // [\"nonRequiredKey\" : null]\n  \"userPrompt\": \"<string>\", // [\"nonRequiredKey\" : null]\n  \"promptType\": \"raw\", // [\"nonRequiredKey\" : \"raw\"]\n  \"promptTemplate\": \"<string>\", // [\"nonRequiredKey\" : \"default\"]\n  \"visibility\": \"public\" // [\"nonRequiredKey\" : \"private\"]\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/agents/{{agentId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"agents",
+								"{{agentId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Agent",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/agents/{{agentId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"agents",
+								"{{agentId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Datasources",
+			"item": [
+				{
+					"name": "Create Datasource",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "multipart/form-data"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "fileName",
+									"value": "<string>",
+									"description": "[\"requiredKey\"]",
+									"type": "text"
+								},
+								{
+									"key": "type",
+									"value": "file",
+									"description": "[\"requiredKey\"]",
+									"type": "text"
+								},
+								{
+									"key": "datastoreId",
+									"value": "<string>",
+									"description": "[\"requiredKey\"]",
+									"type": "text"
+								},
+								{
+									"key": "custom_id",
+									"value": "<string>",
+									"description": "[\"nonRequiredKey\" : null]",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/datasources",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"datasources"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Datasource",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/datasources/{{datasourceId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"datasources",
+								"{{datasourceId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Datasource",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/datasources/{{datasourceId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"datasources",
+								"{{datasourceId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Datastores",
+			"item": [
+				{
+					"name": "Query Datastore",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"query\": \"<string>\", // [\"requiredKey\"]\n  \"topK\": 123, // [\"nonRequiredKey\" : 10]\n  \"filters\": {\n    \"custom_ids\": [\"<string>\"] // [\"includeKey\"]\n  }\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/datastores/{{datastoreId}}/query",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"datastores",
+								"{{datastoreId}}",
+								"query"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Datastore",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"<string>\", // [\"requiredKey\"]\n  \"description\": \"<string>\", // [\"nonRequiredKey\" : null]\n  \"type\": \"qdrant\" // [\"requiredKey\"]\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/datastores",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"datastores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Datastore",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/datastores/{{datastoreId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"datastores",
+								"{{datastoreId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Datastore",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"<string>\", // [\"nonRequiredKey\" : null]\n  \"description\": \"<string>\", // [\"nonRequiredKey\" : null]\n  \"type\": \"qdrant\" // [\"requiredKey\"]\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/datastores/{{datastoreId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"datastores",
+								"{{datastoreId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Datastore",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/datastores/{{datastoreId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"datastores",
+								"{{datastoreId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "https://app.chaindesk.ai/api",
+			"type": "default"
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "agentId",
+			"value": "cm2vzij1207id4s7xw53yhjrn",
+			"type": "default"
+		},
+		{
+			"key": "datastoreId",
+			"value": "cm2vzl53z07aoe2gbu6fqk5b1",
+			"type": "default"
+		}
+	]
+}
